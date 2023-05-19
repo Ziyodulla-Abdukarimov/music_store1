@@ -3,7 +3,8 @@
         <div class="flex flex-col md:flex-row md:justify-between md:items-center">
             <div class="flex justify-between items-center">
                 <div class="flex items-center">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTERTqZnQjl2lYWZk12a4iRR1GZY0AsUD5idw&usqp=CAU" class="w-8">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTERTqZnQjl2lYWZk12a4iRR1GZY0AsUD5idw&usqp=CAU"
+                         class="w-8">
                     <a class="text-gray-800 text-xl ms-4 font-bold md:text-2xl hover:text-gray-700"
                        href="{% url 'dashboard' %}">{{ store_title }}</a>
                     <div class="mx-10 hidden md:block">
@@ -30,11 +31,9 @@
             <div class="md:flex items-center" :class="isOpen ? 'block' : 'hidden'">
                 <div class="flex text-gray-800 flex-col mt-2 md:flex-row md:mt-0 md:mx-1">
                     <a class="my-1 leading-5 hover:text-blue-600 md:mx-4 md:my-0"
-                       href="#">Home</a>
+                       href="{% url 'dashboard' %}">Home</a>
                     <a class="my-1 leading-5 hover:text-blue-600 md:mx-4 md:my-0"
-                       href="#">Blog</a>
-                    <a class="my-1 leading-5 hover:text-blue-600 md:mx-4 md:my-0"
-                       href="#">Products</a>
+                       href="{% url 'dashboard' %}">Products</a>
 
                     <a class="my-1 leading-5 hover:text-blue-600 md:mx-4 md:my-0"
                        href="{% url 'contact' %}">Contact</a>

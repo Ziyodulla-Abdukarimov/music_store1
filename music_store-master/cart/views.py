@@ -5,6 +5,9 @@ from django.db.models import Sum, F
 
 # Create your views here.
 def cartList(request):
+    if request.method == 'POST':
+        cart_item_id = request.POST['remove']
+        CartItem.objects.get(id=cart_item_id).delete()
     context = {
         'cart_items': CartItem.objects.filter(cart__user=request.user),
         'quantitytotal': CartItem.objects.aggregate(total_quantity=Sum('quantity'))['total_quantity'] or 0,
