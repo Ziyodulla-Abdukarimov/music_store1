@@ -5,7 +5,7 @@ from cart.cart import CartSession
 
 # Create your views here.
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    return render(request, 'dashboard.html', {'products': Product.objects.all()[:100]})
 
 
 def contact(request):
@@ -24,10 +24,8 @@ def category_detail(request, pk):
 def product_detail(request, pk, id):
     cartSession = CartSession()
     if request.method == 'POST':
-        if 'addtocart' in request.POST:
-            qty = int(request.POST['qty'])
-
-            cartSession.cartAddSession(request, qty, id)
+        qty = int(request.POST['qty'])
+        cartSession.cartAddSession(request, qty, id)
 
     return render(request, 'product_detail.html', {
         'product': get_object_or_404(Product, id=id),

@@ -40,13 +40,14 @@ def login(request):
         user = authenticate(request, username=email_username, password=password)
         if user is not None:
             authlogin(request, user)
-            cart = request.session[settings.CART_SESSION_ID]
-            user_cart, _ = UserCart.objects.get_or_create(user=user, cart_id_pk=settings.CART_SESSION_ID)
+            if len(request.session.get('cart', {})) > 0:
+                cart = request.session[settings.CART_SESSION_ID]
+                user_cart, _ = UserCart.objects.get_or_create(user=user, cart_id_pk=settings.CART_SESSION_ID)
 
-            for item, item_data in cart.items():
-                product = get_object_or_404(Product, id=item_data['id'])
-                cart_item = CartItem(cart=user_cart, product=product, quantity=item_data['qty'])
-                cart_item.save()
+                for item, item_data in cart.items():
+                    product = get_object_or_404(Product, id=item_data['id'])
+                    cart_item = CartItem(cart=user_cart, product=product, quantity=item_data['qty'])
+                    cart_item.save()
 
             if str(user.user_role) == 'client':
                 return redirect('dashboard')

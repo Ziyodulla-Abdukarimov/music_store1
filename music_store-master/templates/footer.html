@@ -1,9 +1,10 @@
+{% load static %}
 <footer class="bg-gray-900">
     <div class="mx-auto w-full max-w-screen p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
             <div class="mb-6 md:mb-0">
                 <a href="{% url 'dashboard' %}" class="flex items-center">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo"/>
+                    <img src="{% static 'Blackvariant-Button-Ui-System-Folders-Alt-Music.512.png' %}" class="h-8 mr-3" alt="FlowBite Logo"/>
                     <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">{{ store_title }}</span>
                 </a>
             </div>
