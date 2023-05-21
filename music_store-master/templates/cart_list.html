@@ -22,7 +22,7 @@
                                         {{ cartitem.product.name }}</h3>
                                     <div class="flex justify-start items-start flex-col space-y-2">
                                         <p class="text-sm dark:text-white leading-none text-gray-800"><span
-                                                class="dark:text-gray-400 text-gray-300">Price: </span> {{ cartitem.product.price }}
+                                                class="dark:text-gray-400 text-gray-300">Price: </span> {{ cartitem.product.price }}$
                                         </p>
                                     </div>
                                 </div>
@@ -30,7 +30,7 @@
                                     <p class="text-base dark:text-white xl:text-lg leading-6">
                                         ${{ cartitem.product.price }}</p>
                                     <p class="text-base dark:text-white xl:text-lg leading-6 text-gray-800">
-                                        Quantity:{{ cartitem.quantity }}</p>
+                                        Quantity: {{ cartitem.quantity }}</p>
                                     <form method="post">
                                         {% csrf_token %}
                                         <input type="hidden" name="remove" value="{{ cartitem.id }}">
@@ -75,9 +75,11 @@
                             <p class="text-lg font-semibold leading-6 dark:text-white text-gray-800">$8.00</p>
                         </div>
                         <div class="w-full flex justify-center items-center">
+                            <a href="{% url 'checkout' %}" class="w-full">
                             <button class="hover:bg-black dark:bg-white dark:text-gray-800 dark:hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 py-5 w-96 md:w-full bg-gray-800 text-base font-medium leading-4 text-white rounded">
                                 Buy
                             </button>
+                            </a>
                         </div>
                     </div>
                 </div>

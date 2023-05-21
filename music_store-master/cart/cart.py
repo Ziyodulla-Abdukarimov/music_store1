@@ -34,5 +34,13 @@ class CartSession:
             request.session['cart'] = session_cart
             request.session.save()
 
+    def removeCartItem(self, request, id):
+
+        session_cart = request.session.get('cart', {})
+        if str(id) in session_cart:
+            del session_cart[str(id)]
+            request.session['cart'] = session_cart
+            request.session.save()
+
     def getCartItems(self, request):
         return request.session.get('cart', {})

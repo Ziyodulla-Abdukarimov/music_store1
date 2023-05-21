@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import MyUser
 from django.contrib import messages
-from .utilites import validate_phone_number, validate_email
+from common.validators import validate_phone_number, validate_email
 from django.contrib.auth import authenticate, login as authlogin, logout
 from config import settings
 from cart.models import UserCart, CartItem
@@ -46,9 +46,12 @@ def login(request):
 
                 for item, item_data in cart.items():
                     product = get_object_or_404(Product, id=item_data['id'])
-                    cart_item = CartItem(cart=user_cart, product=product, quantity=item_data['qty'])
-                    cart_item.save()
-
+                    if not CartItem.objects.filter(product=product).exists():
+                        cart_item = CartItem(cart=user_cart, product=product, quantity=item_data['qty'])
+                        cart_item.save()
+                    else:
+                        old_qty = CartItem.objects.get(product=product).quantity
+                        CartItem.objects.update(quantity=old_qty + item_data['qty'])
             if str(user.user_role) == 'client':
                 return redirect('dashboard')
 
