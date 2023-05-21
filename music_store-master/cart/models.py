@@ -31,6 +31,10 @@ class CartItem(BaseModel):
         return CartItem.objects.annotate(item_price=F('product__price') * F('quantity')).aggregate(
             total_price=Sum('item_price'))['total_price'] or 0
 
+    @staticmethod
+    def get_total_qty():
+        return CartItem.objects.aggregate(total_quantity=Sum('quantity'))['total_quantity']
+
     class Meta:
         ordering = ("-created_at",)
 

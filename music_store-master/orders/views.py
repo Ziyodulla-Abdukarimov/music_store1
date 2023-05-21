@@ -43,3 +43,10 @@ def checkout(request):
         return redirect('login')
 
     return render(request, 'checkout.html')
+
+
+def my_orders(request):
+    context = {
+        'order': Order.objects.get(user=request.user)
+    }
+    return render(request, 'myorders.html', context)

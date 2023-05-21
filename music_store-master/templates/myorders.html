@@ -1,0 +1,43 @@
+{% extends 'dashboard.html' %}
+
+{% block body %}
+    <div class="py-8 px-4 md:px-6 2xl:px-24 2xl:container 2xl:mx-auto">
+        <div class="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
+            <div class="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
+                <div class="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full rounded">
+                    <p class="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">
+                        Orders</p>
+                    <p>Order ID: {{ order.id }}</p>
+                    {% for cartitem in order.cart_items.all %}
+                    <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
+                        <div class="pb-4 md:pb-8 w-full md:w-40 rounded">
+                            <img class="w-full hidden md:block" src="{{ cartitem.product.image.url }}"
+                                 alt="dress"/>
+                            <img class="w-full md:hidden" src="{{ cartitem.product.image.url }}"
+                                 alt="dress"/>
+                        </div>
+                        <div class="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
+                            <div class="w-full flex flex-col justify-start items-start space-y-8">
+                                <h3 class="text-xl dark:text-white xl:text-2xl font-semibold leading-6 text-gray-800">
+                                    {{ cartitem.product.name }}</h3>
+                                <div class="flex justify-start items-start flex-col space-y-2">
+                                    <p class="text-sm dark:text-white leading-none text-gray-800"><span
+                                            class="dark:text-gray-400 text-gray-300">Price: </span> {{ cartitem.product.price }}$
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between space-x-8 items-start w-full">
+                                <p class="text-base dark:text-white xl:text-lg leading-6">
+                                    ${{ cartitem.product.price }}</p>
+                                <p class="text-base dark:text-white xl:text-lg leading-6 text-gray-800">
+                                    Quantity: {{ cartitem.quantity }}</p>
+                                    {{ order.order_status }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
