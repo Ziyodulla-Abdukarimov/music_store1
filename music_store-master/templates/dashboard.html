@@ -96,15 +96,17 @@
         <div class="container py-24 mx-auto">
             <div class="flex flex-wrap -m-4">
                 {% for product in products %}
-                    <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-                        <a class="block relative h-48 rounded overflow-hidden">
+                    <div class="lg:w-1/4 md:w-1/2 p-4 w-full transition duration-300 ease-in-out hover:shadow-lg p-8 rounded-xl">
+                        <a class="block relative h-48 rounded overflow-hidden" href="product/{{ product.category.id }}/{{ product.id }}">
                             <img alt="ecommerce" class="object-cover object-center w-full h-full block"
                                  src="{{ product.image.url }}">
                         </a>
                         <div class="mt-4">
+                            <a href="product/{{ product.category.id }}/{{ product.id }}">
                             <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{ product.category.name }}</h3>
                             <h2 class="text-gray-900 title-font text-lg font-medium">{{ product.name }}</h2>
                             <p class="mt-1">${{ product.price }}</p>
+                            </a>
                         </div>
                     </div>
                 {% endfor %}
