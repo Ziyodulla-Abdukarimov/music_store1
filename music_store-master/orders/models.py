@@ -14,7 +14,6 @@ class OrderStatus(models.Choices):
 class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
     order_status = models.CharField(max_length=100, choices=OrderStatus.choices, default=OrderStatus.IN_PROGRESS)
-    cart_items = models.ManyToManyField(CartItem, related_name='orders')
     email = models.CharField(max_length=150)
     cardHolder = models.CharField(max_length=250)
     cardNo = models.CharField(max_length=250)
@@ -32,3 +31,12 @@ class Order(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.id}"
+
+
+class OrderItems(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_item')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='order_items')
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f'{self.order.user}: {self.product.name}'

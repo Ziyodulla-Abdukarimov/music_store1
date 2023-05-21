@@ -55,10 +55,12 @@
                         <div class="items-center justify-between mb-4">
                             <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">Latest
                                 Customers</h5>
-                            <a href="{% url 'cartList' %}"
-                               class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
-                                View all
-                            </a>
+                            {% if cart_count > 0 %}
+                                <a href="{% url 'cartList' %}"
+                                   class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">
+                                    View all
+                                </a>
+                            {% endif %}
                         </div>
                         <div class="flow-root">
                             <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -131,7 +133,8 @@
                                 </li>
                                 <li>
                                     <a href="{% url 'my-order' %}"
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My Orders</a>
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">My
+                                        Orders</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'logout' %}"

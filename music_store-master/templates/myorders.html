@@ -8,7 +8,7 @@
                     <p class="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">
                         Orders</p>
                     <p>Order ID: {{ order.id }}</p>
-                    {% for cartitem in order.cart_items.all %}
+                    {% for cartitem in order_items %}
                     <div class="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
                         <div class="pb-4 md:pb-8 w-full md:w-40 rounded">
                             <img class="w-full hidden md:block" src="{{ cartitem.product.image.url }}"

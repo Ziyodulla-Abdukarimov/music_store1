@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from canfigure import bot_token, admin_id
-from .models import Order
+from .models import Order, OrderItems
 from cart.cart import CartItem
 from common.validators import validate_email
 from django.contrib import messages
@@ -23,19 +23,37 @@ def checkout(request):
                 messages.error(request, 'Email is invalid 🤐')
             else:
                 try:
-                    order = Order.objects.create(
-                        user=request.user,
-                        email=email,
-                        cardHolder=cardholder,
-                        cardNo=card_no,
-                        creditExpiry=credit_expiry,
-                        creditCvc=credit_cvc,
-                        billingAddress=billing_address,
-                        billingZip=billing_zip,
-                        totalPrice=CartItem.get_total_price(),
-                    )
-                    order.cart_items.set(CartItem.objects.all())
-                    CartItem.objects.all().delete()
+                    if Order.objects.all().count() == 0:
+                        order = Order.objects.create(
+                            user=request.user,
+                            email=email,
+                            cardHolder=cardholder,
+                            cardNo=card_no,
+                            creditExpiry=credit_expiry,
+                            creditCvc=credit_cvc,
+                            billingAddress=billing_address,
+                            billingZip=billing_zip,
+                            totalPrice=CartItem.get_total_price(),
+                        )
+                        order.save()
+                        for cartItem in CartItem.objects.all():
+                            OrderItems(order=order, product=cartItem.product, quantity=cartItem.quantity).save()
+                        CartItem.objects.all().delete()
+                    else:
+                        order = Order.objects.get(user=request.user)
+                        order.email = email
+                        order.cardHolder = cardholder
+                        order.cardNo = card_no
+                        order.creditExpiry = credit_expiry
+                        order.creditCvc = credit_cvc
+                        order.billingAddress = billing_address
+                        order.billingZip = billing_zip
+                        order.totalPrice = CartItem.get_total_price()
+                        order.save()
+                        for cartItem in CartItem.objects.all():
+                            OrderItems(order=order, product=cartItem.product, quantity=cartItem.quantity).save()
+                        CartItem.objects.all().delete()
+                    return redirect('dashboard')
                 except Exception as e:
                     messages.error(request, f"Failed to create order: {str(e)}")
 
@@ -46,7 +64,9 @@ def checkout(request):
 
 
 def my_orders(request):
+    order = Order.objects.get(user=request.user)
     context = {
-        'order': Order.objects.get(user=request.user)
+        'order': order,
+        'order_items': OrderItems.objects.filter(order=order),
     }
     return render(request, 'myorders.html', context)
